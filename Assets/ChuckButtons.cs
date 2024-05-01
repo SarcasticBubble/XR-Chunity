@@ -29,15 +29,32 @@ public class ChuckButtons : MonoBehaviour
         handClosed = 0;
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Button One")
+        {
+            ButtonOne();
+            Debug.Log("Button One Pressed");
+        }
+        else if (other.gameObject.tag == "Button Two")
+        {
+            ButtonTwo();
+        }
+        else if (other.gameObject.tag == "Button 3")
+        {
+            ButtonThree();
+        }
+    }
+
     public void ButtonOne()
     {
         GetComponent<ChuckSubInstance>().RunCode(string.Format(@"
         TriOsc tri => dac;
         {0} => int handClosed;
         if (handClosed == 0) {{
-            1 => tri.gain;
+            0.9 => tri.gain;
         }} else {{
-            .3 => tri.gain;
+            0.3 => tri.gain;
         }}
         Std.mtof(64) => tri.freq;
         300::ms => now;
@@ -53,7 +70,7 @@ public class ChuckButtons : MonoBehaviour
         if (handClosed == 0) {{
             0.9 => tri.gain;
         }} else {{
-            0.2 => tri.gain;
+            0.3 => tri.gain;
         }}
         Std.mtof(66) => tri.freq;
         300::ms => now;
@@ -69,7 +86,7 @@ public class ChuckButtons : MonoBehaviour
         if (handClosed == 0) {{
             0.9 => tri.gain;
         }} else {{
-            0.2 => tri.gain;
+            0.3 => tri.gain;
         }}
         Std.mtof(68) => tri.freq;
         300::ms => now;
